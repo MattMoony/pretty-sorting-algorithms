@@ -10,16 +10,35 @@ function refresh(movm, comp) {
 
 function display_array_pillars(arr) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let scale = canvas.height/Math.max(...arr);
 
     for (let i = canvas.width/(arr.length-1); i < canvas.width; i+=canvas.width/(arr.length-1)) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.moveTo(i, canvas.height);
-        ctx.lineTo(i, canvas.height-arr[Math.floor(i/(canvas.width/(arr.length-1)))]);
+        ctx.lineTo(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale));
         ctx.stroke();
     }
 }
+function display_array_color_pillars(arr, line_weight) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let scale = canvas.height/Math.max(...arr);
 
+    line_weight = line_weight || 2;
+    let arr_max = Math.max(...arr);
+
+    for (let i = canvas.width/(arr.length-1); i < canvas.width; i+=canvas.width/(arr.length-1)) {
+        ctx.beginPath();
+
+        ctx.strokeStyle = "hsl(" + arr[Math.floor(i/(canvas.width/(arr.length-1)))] * (360/arr_max) + ", 100%, 50%)";
+        ctx.lineWidth = line_weight;
+
+        ctx.moveTo(i, canvas.height);
+        ctx.lineTo(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale));
+
+        ctx.stroke();
+    }
+}
 function display_array_circle(arr) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -31,7 +50,6 @@ function display_array_circle(arr) {
         ctx.stroke();
     }
 }
-
 function display_array_color_circle(arr, line_weight) {
     let arr_max = Math.max(...arr);
     line_weight = line_weight || 3;
@@ -53,24 +71,6 @@ function display_array_color_circle(arr, line_weight) {
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
 }
-function display_array_color_pillars(arr, line_weight) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    line_weight = line_weight || 2;
-    let arr_max = Math.max(...arr);
-
-    for (let i = canvas.width/(arr.length-1); i < canvas.width; i+=canvas.width/(arr.length-1)) {
-        ctx.beginPath();
-
-        ctx.strokeStyle = "hsl(" + arr[Math.floor(i/(canvas.width/(arr.length-1)))] * (360/arr_max) + ", 100%, 50%)";
-        ctx.lineWidth = line_weight;
-
-        ctx.moveTo(i, canvas.height);
-        ctx.lineTo(i, canvas.height-arr[Math.floor(i/(canvas.width/(arr.length-1)))]);
-
-        ctx.stroke();
-    }
-}
 function display_array_color_growing(arr, line_weight) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -88,6 +88,31 @@ function display_array_color_growing(arr, line_weight) {
 
 
         ctx.stroke();
+    }
+}
+function display_array_dots(arr) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let scale = canvas.height/Math.max(...arr);
+
+    for (let i = canvas.width/(arr.length-1); i < canvas.width; i+=canvas.width/(arr.length-1)) {
+        ctx.beginPath();
+        ctx.strokeStyle = "black";
+        ctx.ellipse(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale), 1, 1, 0, 0, 2*Math.PI);
+        ctx.fill();
+    }
+}
+function display_array_color_dots(arr, radius) {
+    radius = radius || 2;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let scale = canvas.height/Math.max(...arr),
+        arr_max = Math.max(...arr);
+
+    for (let i = canvas.width/(arr.length-1); i < canvas.width; i+=canvas.width/(arr.length-1)) {
+        ctx.beginPath();
+        ctx.fillStyle = "hsl(" + arr[Math.floor(i/(canvas.width/(arr.length-1)))] * (360/arr_max) + ", 100%, 50%)";
+        ctx.ellipse(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale), radius, radius, 0, 0, 2*Math.PI);
+        ctx.fill();
     }
 }
 
@@ -373,7 +398,7 @@ async function doCocktailMergeSort(rarr) {
     glob_comp = 0;
     glob_movm = 0;
 
-    // -- MERGE SORT -- //
+    // -- COCKTAIL-MERGE SORT -- //
     document.getElementById('algorithm_div').innerHTML = "Cocktail-MergeSort";
     await cmSort(rarr, 0, rarr.length-1, Math.floor(rarr.length/8), glob_display_func);
 
