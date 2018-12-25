@@ -1,5 +1,5 @@
 async function introSort(a, display) {
-    let maxDepth = Math.floor(Math.log(a.length) * 2)
+    let maxDepth = Math.floor(Math.log(a.length) * 2);
     await introSort_rec(a, 0, a.length-1, maxDepth, display);
 }
 
@@ -20,7 +20,7 @@ async function introSort_rec(a, l, r, maxd, display) {
         }
     }
     else {
-        if (p-l >= 1) {
+        if ((p-1)-l >= 1) {
             await introSort_rec(a, l, p-1, maxd-1, display);
         }
         if (r-(p+1) >= 1) {
