@@ -19,4 +19,4 @@ ever so often.
 Inspired by the work of: <br/>
 	- Timo Bingmann (https://www.youtube.com/user/tbingmann)<br/>
 	- w0rthy (https://www.youtube.com/user/carnifexV)<br/>
-	
+	- Sorting Stuff (https://www.youtube.com/channel/UCkcsofTvUMe1gQKuNoZbkKw)
