@@ -39,7 +39,7 @@ function display_array_color_pillars(arr, line_weight) {
         ctx.stroke();
     }
 }
-function display_array_circle(arr) {
+function display_array_pillar_spiral(arr) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
@@ -47,6 +47,25 @@ function display_array_circle(arr) {
         ctx.strokeStyle = "black";
         ctx.moveTo(canvas.width/2, canvas.height/2);
         ctx.lineTo((canvas.width/2) + arr[c] *Math.cos(Math.PI*i/180.0), (canvas.height/2) + arr[c] *Math.sin(Math.PI*i/180.0));
+        ctx.stroke();
+    }
+}
+function display_array_color_pillar_spiral(arr, line_weight) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    line_weight = line_weight || 2;
+    let arr_max = Math.max(...arr);
+
+    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
+        ctx.beginPath();
+
+        ctx.strokeStyle = "hsl(" + arr[c] * (360/arr_max) + ", 100%, 50%)";
+        ctx.lineWidth = line_weight;
+
+        ctx.moveTo(canvas.width/2, canvas.height/2);
+        ctx.lineTo((canvas.width/2) + arr[c] *Math.cos(Math.PI*i/180.0), (canvas.height/2) + arr[c] *Math.sin(Math.PI*i/180.0));
+
+
         ctx.stroke();
     }
 }
@@ -71,33 +90,16 @@ function display_array_color_circle(arr, line_weight) {
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
 }
-function display_array_color_growing(arr, line_weight) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+function display_array_dots(arr, radius) {
+    radius = radius || 2;
 
-    line_weight = line_weight || 2;
-    let arr_max = Math.max(...arr);
-
-    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
-        ctx.beginPath();
-
-        ctx.strokeStyle = "hsl(" + arr[c] * (360/arr_max) + ", 100%, 50%)";
-        ctx.lineWidth = line_weight;
-
-        ctx.moveTo(canvas.width/2, canvas.height/2);
-        ctx.lineTo((canvas.width/2) + arr[c] *Math.cos(Math.PI*i/180.0), (canvas.height/2) + arr[c] *Math.sin(Math.PI*i/180.0));
-
-
-        ctx.stroke();
-    }
-}
-function display_array_dots(arr) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let scale = canvas.height/Math.max(...arr);
 
     for (let i = canvas.width/(arr.length-1); i < canvas.width; i+=canvas.width/(arr.length-1)) {
         ctx.beginPath();
-        ctx.strokeStyle = "black";
-        ctx.ellipse(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale), 1, 1, 0, 0, 2*Math.PI);
+        ctx.fillStyle = "black";
+        ctx.ellipse(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale), radius, radius, 0, 0, 2*Math.PI);
         ctx.fill();
     }
 }
@@ -114,6 +116,50 @@ function display_array_color_dots(arr, radius) {
         ctx.ellipse(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale), radius, radius, 0, 0, 2*Math.PI);
         ctx.fill();
     }
+}
+function display_array_dots_spiral(arr, radius) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    radius = radius || 2;
+
+    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.ellipse((canvas.width/2) + arr[c] *Math.cos(Math.PI*i/180.0), (canvas.height/2) + arr[c] *Math.sin(Math.PI*i/180.0), radius,
+            radius, 0, 0, 2*Math.PI);
+        ctx.fill();
+    }
+}
+function display_array_color_dots_spiral(arr, radius) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    radius = radius || 2;
+    let arr_max = Math.max(...arr);
+
+    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
+        ctx.beginPath();
+        ctx.fillStyle = ctx.fillStyle = "hsl(" + arr[Math.floor(i/(canvas.width/(arr.length-1)))] * (360/arr_max) + ", 100%, 50%)";
+        ctx.ellipse((canvas.width/2) + arr[c] *Math.cos(Math.PI*i/180.0), (canvas.height/2) + arr[c] *Math.sin(Math.PI*i/180.0), radius,
+            radius, 0, 0, 2*Math.PI);
+        ctx.fill();
+    }
+}
+function display_array_color_circle_dots(arr, radius) {
+    let arr_max = Math.max(...arr);
+    radius = radius || 3;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let r = canvas.width/3;
+
+    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
+        ctx.beginPath();
+        ctx.fillStyle = "hsl(" + arr[c] * (360/arr_max) + ", 100%, 50%)";
+
+        ctx.ellipse((canvas.width/2) + r*Math.cos(Math.PI*i/180.0), (canvas.height/2) + r*Math.sin(Math.PI*i/180.0), radius,
+            radius, 0, 0, 2*Math.PI);
+        ctx.fill();
+    }
+
+    ctx.fillStyle = "black";
+    ctx.lineWidth = 1;
 }
 
 

@@ -196,12 +196,17 @@
             <td>
                 <select id="display_function">
                     <option value="display_array_pillars">As pillars</option>
-                    <option value="display_array_color_pillars">As colored pillars</option>
-                    <option value="display_array_circle">As "growing" circle</option>
-                    <option value="display_array_color_growing">As colored "growing" circle</option>
-                    <option value="display_array_color_circle">As colored circle</option>
                     <option value="display_array_dots">As dots</option>
+                    <option value="display_array_color_pillars">As colored pillars</option>
                     <option value="display_array_color_dots">As colored dots</option>
+
+                    <option value="display_array_pillar_spiral">As spiral of pillars</option>
+                    <option value="display_array_dots_spiral">As spiral of dots</option>
+                    <option value="display_array_color_pillar_spiral">As colored spiral of pillars</option>
+                    <option value="display_array_color_dots_spiral">As colored spiral of dots</option>
+
+                    <option value="display_array_color_circle">As colored circle</option>
+                    <option value="display_array_color_circle_dots">As colored circle of dots</option>
                 </select>
             </td>
         </tr>
@@ -284,20 +289,29 @@
                     case 'display_array_color_pillars':
                         glob_display_func = display_array_color_pillars
                         break;
-                    case 'display_array_circle':
-                        glob_display_func = display_array_circle;
+                    case 'display_array_pillar_spiral':
+                        glob_display_func = display_array_pillar_spiral;
                         break;
                     case 'display_array_color_circle':
                         glob_display_func = display_array_color_circle;
                         break;
-                    case 'display_array_color_growing':
-                        glob_display_func = display_array_color_growing;
+                    case 'display_array_color_pillar_spiral':
+                        glob_display_func = display_array_color_pillar_spiral;
                         break;
                     case 'display_array_dots':
                         glob_display_func = display_array_dots;
                         break;
                     case 'display_array_color_dots':
                         glob_display_func = display_array_color_dots;
+                        break;
+                    case 'display_array_dots_spiral':
+                        glob_display_func = display_array_dots_spiral;
+                        break;
+                    case 'display_array_color_dots_spiral':
+                        glob_display_func = display_array_color_dots_spiral;
+                        break;
+                    case 'display_array_color_circle_dots':
+                        glob_display_func = display_array_color_circle_dots;
                         break;
                 }
 
