@@ -1,7 +1,7 @@
 Visualizing Sorting Algorithms
 ------------------------------
 
-A try to make the work of sorting algorithms visible.
+A try to make the work of sorting algorithms visible.<br />
 Although the speed may not always be a 100% accurate, 
 I hope that the project itself is still quite enjoyable.
 
@@ -16,7 +16,7 @@ can/should call the function "refresh" with said variable's values
 ever so often.
 
 
-Inspired by the work of:
-	- Timo Bingmann (https://www.youtube.com/user/tbingmann)
-	- w0rthy (https://www.youtube.com/user/carnifexV)
+Inspired by the work of: <br/>
+	- Timo Bingmann (https://www.youtube.com/user/tbingmann)<br/>
+	- w0rthy (https://www.youtube.com/user/carnifexV)<br/>
 	
