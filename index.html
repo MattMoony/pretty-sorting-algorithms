@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Visualizing sorting algos</title>
+</head>
+
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Unica+One');
+        @import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
+        @import url('https://fonts.googleapis.com/css?family=Quicksand');
+        @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+        body {
+            overflow: hidden;
+            font-family: 'Roboto';
+        }
+        h1 {
+            text-align: center;
+            font-family: 'Unica One';
+            font-size: 55px;
+
+            padding-bottom: 10px;
+            border-bottom: 2px solid black;
+        }
+        .important_letter {
+            color: tomato;
+        }
+        #score_div {
+            display: block;
+            position: fixed;
+            right: 30px; bottom: 100px;
+
+            font-family: 'Quicksand';
+        }
+        #comparisons, #movements, #runtime {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        td {
+            padding: 0 7.5px;
+        }
+        #algorithm_div {
+            display: block;
+            position: fixed;
+            right: 30px; top: 150px;
+
+            font-family: 'Quicksand';
+            font-weight: bold;
+            font-size: 35px;
+        }
+        #algorithm_div::first-letter {
+            color: tomato;
+        }
+
+
+        #algorithm_settings {
+            border-left: 1.5px solid dimgray;
+            display: block;
+            position: fixed;
+            left: 25px; top: 350px;
+            padding: 15px 2.5px;
+        }
+        select, input {
+            font-size: 12.5px;
+            margin-bottom: 1px;
+            font-family: 'Roboto';
+            padding: 2.5px 7.5px;
+            border: 1px solid #cecece;
+            border-radius: 1px;
+        }
+        select:focus, input:focus {
+            outline: none;
+        }
+        #algorithm_settings input[type="button"] {
+            background-color: tomato;
+            border: none;
+            color: white;
+            padding: 7.5px 15px;
+            border-radius: 2.5px;
+            font-size: 15px;
+            margin-top: 12.5px;
+            transition: .5s ease;
+        }
+        #algorithm_settings input[type="button"]:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+        #algorithm_settings td:last-child {
+            text-align: right;
+        }
+
+
+        #canvas_div {
+            display: block;
+            margin: 0 auto;
+            width: 70%;
+
+            /* border-left: 2px dashed dimgray;
+            border-right: 2px dashed dimgray; */
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+            /* background-color: aliceblue; */
+
+            /* border-bottom: 1.5px solid dimgray; */
+        }
+        footer {
+            display: block;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            width: 100%;
+            text-align: center;
+            padding-bottom: 10px;
+            font-family: 'Share Tech Mono';
+        }
+    </style>
+
+    <h1><span class='important_letter'>S</span>orting <span class='important_letter'>A</span>lgorithms</h1>
+
+    <div id="score_div">
+        <table>
+            <tr>
+                <td>Comparisons</td>
+                <td id="comparisons">0</td>
+            </tr>
+            <tr>
+                <td>Movements</td>
+                <td id="movements">0</td>
+            </tr>
+            <tr>
+                <td>Runtime [s]</td>
+                <td id="runtime">0</td>
+            </tr>
+        </table>
+    </div>
+    <div id="algorithm_div">-</div>
+
+    <table id="algorithm_settings">
+        <tr>
+            <td><label for="algorithm_input">Algorithm: </label></td>
+            <td><select id="algorithm_input">
+                    <option value="bubble_sort">BubbleSort</option>
+                    <option value="insertion_sort">InsertionSort</option>
+                    <option value="selection_sort">SelectionSort</option>
+                    <option value="double_selection_sort">Double SelectionSort</option>
+
+                    <option value="quick_sort">QuickSort</option>
+                    <option value="merge_sort">MergeSort</option>
+                    <option value="counting_sort">CountingSort</option>
+                    <option value="gravity_sort">GravitySort</option>
+                    <option value="bitonic_sort">BitonicSort</option>
+                    <option value="tree_sort">TreeSort</option>
+
+                    <option value="intro_sort">IntroSort</option>
+                    <option value="heap_sort">HeapSort</option>
+                    <option value="radix_sort_i">RadixSort [ISort]</option>
+                    <option value="radix_sort_c">RadixSort [CSort]</option>
+                    <option value="shell_sort">ShellSort</option>
+                    <option value="comb_sort">CombSort</option>
+
+                    <option value="gnome_sort">GnomeSort</option>
+                    <option value="cocktail_sort">CocktailShaker-Sort</option>
+
+                    <option value="slow_sort">SlowSort</option>
+                    <option value="stooge_sort">StoogeSort</option>
+                    <option value="bogo_sort">BogoSort</option>
+                </select></td>
+        </tr>
+        <tr>
+            <td><label for="amount_input">Amount: </label></td>
+            <td><input id="amount_input" type="number" placeholder="e.g.: 1000" /></td>
+        </tr>
+        <tr>
+            <td><label for="pause_input">Pause [ms]: </label></td>
+            <td><input id="pause_input" type="number" placeholder="e.g.: 100" /></td>
+        </tr>
+        <tr>
+            <td><label for="lower_input">Lower boundry: </label></td>
+            <td><input id="lower_input" type="number" placeholder="e.g.: 10" /></td>
+        </tr>
+        <tr>
+            <td><label for="upper_input">Upper boundry: </label></td>
+            <td><input id="upper_input" type="number" placeholder="e.g.: 10000" /></td>
+        </tr>
+        <tr>
+            <td><label for="display_function">Display option: </label></td>
+            <td>
+                <select id="display_function">
+                    <option value="display_array_pillars">As pillars</option>
+                    <option value="display_array_color_pillars">As colored pillars</option>
+                    <option value="display_array_circle">As "growing" circle</option>
+                    <option value="display_array_color_growing">As colored "growing" circle</option>
+                    <option value="display_array_color_circle">As colored circle</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="draw_random">Creation options: </label></td>
+            <td>
+                <select id="draw_random">
+                    <option value="draw_random">Completely random</option>
+                    <option value="draw_semi_random">"Semi" random</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="button" id="submit_start" value="Start!" /></td>
+        </tr>
+    </table>
+
+    <div id="canvas_div">
+        <canvas id="main" width="800" height="700"></canvas>
+    </div>
+
+    <script src="algos/quick_sort.js"></script>
+    <script src="algos/counting_sort.js"></script>
+    <script src="algos/insertion_sort.js"></script>
+    <script src="algos/selection_sort.js"></script>
+    <script src="algos/bubble_sort.js"></script>
+    <script src="algos/radix_sort.js"></script>
+    <script src="algos/heap_sort.js"></script>
+    <script src="algos/bitonic_sort.js"></script>
+    <script src="algos/shell_sort.js"></script>
+    <script src="algos/merge_sort.js"></script>
+    <script src="algos/bogo_sort.js"></script>
+    <script src="algos/cocktail_sort.js"></script>
+    <script src="algos/gnome_sort.js"></script>
+    <script src="algos/comb_sort.js"></script>
+    <script src="algos/tree_sort.js"></script>
+    <script src="algos/intro_sort.js"></script>
+    <script src="algos/slow_sort.js"></script>
+    <script src="algos/stooge_sort.js"></script>
+    <script src="algos/double_selection_sort.js"></script>
+    <script src="algos/gravity_sort.js"></script>
+
+    <script src="visualize.js"></script>
+
+    <script>
+        window.onload = e => {
+            // stuff ... 
+            cnvs = document.getElementById('main');
+            ctx = cnvs.getContext('2d');
+
+            canvas = {
+                width: document.getElementById('main').width,
+                height: document.getElementById('main').height
+            };
+
+            document.getElementById('submit_start').onclick = e => {
+                let algo = document.getElementById('algorithm_input').value,
+                    amount = document.getElementById('amount_input').value,
+                    pause_ms = document.getElementById('pause_input').value,
+                    lower = document.getElementById('lower_input').value,
+                    upper = document.getElementById('upper_input').value,
+                    display_func = document.getElementById('display_function').value,
+                    draw_func = document.getElementById('draw_random').value;
+
+                if (amount != '')
+                    glob_amount = parseInt(amount);
+                if (pause_ms != '')
+                    glob_sleep_time = parseInt(amount);
+                if (lower != '')
+                    glob_lower = parseInt(lower);
+                if (upper != '')
+                    glob_upper = parseInt(upper);
+
+                switch (display_func) {
+                    case 'display_array_pillars':
+                        glob_display_func = display_array_pillars;
+                        break;
+                    case 'display_array_color_pillars':
+                        glob_display_func = display_array_color_pillars
+                        break;
+                    case 'display_array_circle':
+                        glob_display_func = display_array_circle;
+                        break;
+                    case 'display_array_color_circle':
+                        glob_display_func = display_array_color_circle;
+                        break;
+                    case 'display_array_color_growing':
+                        glob_display_func = display_array_color_growing;
+                        break;
+                }
+
+                switch (draw_func) {
+                    case 'draw_random':
+                        glob_random_func = draw_random;
+                        break;
+                    case 'draw_semi_random':
+                        glob_random_func = draw_semi_random;
+                        break;
+                }
+
+                glob_stime = (new Date()).getTime();
+                switch (algo) {
+                    case 'quick_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doQuickSort(rarr);
+                    }
+                        break;
+                    case 'counting_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doCountingSort(rarr);
+                    }
+                        break;
+                    case 'insertion_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doInsertionSort(rarr);
+                    }
+                        break;
+                    case 'selection_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doSelectionSort(rarr);
+                    }
+                        break;
+                    case 'bubble_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doBubbleSort(rarr);
+                    }
+                        break;
+                    case 'heap_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doHeapSort(rarr);
+                    }
+                        break;
+                    case 'radix_sort_i': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doRadixSort_i(rarr);
+                    }
+                        break;
+                    case 'radix_sort_c': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doRadixSort_c(rarr);
+                    }
+                        break;
+                    case 'bitonic_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doBitonicSort(rarr);
+                    }
+                        break;
+                    case 'shell_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doShellSort(rarr);
+                    }
+                        break;
+                    case 'merge_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doMergeSort(rarr);
+                    }
+                        break;
+                    case 'bogo_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doBogoSort(rarr);
+                    }
+                        break;
+                    case 'cocktail_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doCocktailSort(rarr);
+                    }
+                        break;
+                    case 'gnome_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doGnomeSort(rarr);
+                    }
+                        break;
+                    case 'comb_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doCombSort(rarr);
+                    }
+                        break;
+                    case 'tree_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doTreeSort(rarr);
+                    }
+                        break;
+                    case 'intro_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doIntroSort(rarr);
+                    }
+                        break;
+                    case 'slow_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doSlowSort(rarr);
+                    }
+                        break;
+                    case 'stooge_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doStoogeSort(rarr);
+                    }
+                        break;
+                    case 'double_selection_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doDSelectionSort(rarr);
+                    }
+                        break;
+                    case 'gravity_sort': {
+                        refresh(0, 0);
+                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                        doGravitySort(rarr);
+                    }
+                        break;
+                }
+            };
+
+            visualize_init();
+        };
+    </script>
+</body>
+
+</html>
