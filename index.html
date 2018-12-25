@@ -168,6 +168,7 @@
 
                     <option value="gnome_sort">GnomeSort</option>
                     <option value="cocktail_sort">CocktailShaker-Sort</option>
+                    <option value="cocktail_merge_sort">Cocktail-MergeSort</option>
 
                     <option value="slow_sort">SlowSort</option>
                     <option value="stooge_sort">StoogeSort</option>
@@ -241,6 +242,7 @@
     <script src="algos/stooge_sort.js"></script>
     <script src="algos/double_selection_sort.js"></script>
     <script src="algos/gravity_sort.js"></script>
+    <script src="algos/cocktail_merge.js"></script>
 
     <script src="visualize.js"></script>
 
@@ -302,131 +304,159 @@
 
                 glob_stime = (new Date()).getTime();
                 switch (algo) {
-                    case 'quick_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doQuickSort(rarr);
-                    }
+                    case 'quick_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doQuickSort(rarr);
+                        }
                         break;
-                    case 'counting_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doCountingSort(rarr);
-                    }
+                    case 'counting_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doCountingSort(rarr);
+                        }
                         break;
-                    case 'insertion_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doInsertionSort(rarr);
-                    }
+                    case 'insertion_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doInsertionSort(rarr);
+                        }
                         break;
-                    case 'selection_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doSelectionSort(rarr);
-                    }
+                    case 'selection_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doSelectionSort(rarr);
+                        }
                         break;
-                    case 'bubble_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doBubbleSort(rarr);
-                    }
+                    case 'bubble_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doBubbleSort(rarr);
+                        }
                         break;
-                    case 'heap_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doHeapSort(rarr);
-                    }
+                    case 'heap_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doHeapSort(rarr);
+                        }
                         break;
-                    case 'radix_sort_i': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doRadixSort_i(rarr);
-                    }
+                    case 'radix_sort_i':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doRadixSort_i(rarr);
+                        }
                         break;
-                    case 'radix_sort_c': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doRadixSort_c(rarr);
-                    }
+                    case 'radix_sort_c':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doRadixSort_c(rarr);
+                        }
                         break;
-                    case 'bitonic_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doBitonicSort(rarr);
-                    }
+                    case 'bitonic_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doBitonicSort(rarr);
+                        }
                         break;
-                    case 'shell_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doShellSort(rarr);
-                    }
+                    case 'shell_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doShellSort(rarr);
+                        }
                         break;
-                    case 'merge_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doMergeSort(rarr);
-                    }
+                    case 'merge_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doMergeSort(rarr);
+                        }
                         break;
-                    case 'bogo_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doBogoSort(rarr);
-                    }
+                    case 'bogo_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doBogoSort(rarr);
+                        }
                         break;
-                    case 'cocktail_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doCocktailSort(rarr);
-                    }
+                    case 'cocktail_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doCocktailSort(rarr);
+                        }
                         break;
-                    case 'gnome_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doGnomeSort(rarr);
-                    }
+                    case 'gnome_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doGnomeSort(rarr);
+                        }
                         break;
-                    case 'comb_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doCombSort(rarr);
-                    }
+                    case 'comb_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doCombSort(rarr);
+                        }
                         break;
-                    case 'tree_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doTreeSort(rarr);
-                    }
+                    case 'tree_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doTreeSort(rarr);
+                        }
                         break;
-                    case 'intro_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doIntroSort(rarr);
-                    }
+                    case 'intro_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doIntroSort(rarr);
+                        }
                         break;
-                    case 'slow_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doSlowSort(rarr);
-                    }
+                    case 'slow_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doSlowSort(rarr);
+                        }
                         break;
-                    case 'stooge_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doStoogeSort(rarr);
-                    }
+                    case 'stooge_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doStoogeSort(rarr);
+                        }
                         break;
-                    case 'double_selection_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doDSelectionSort(rarr);
-                    }
+                    case 'double_selection_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doDSelectionSort(rarr);
+                        }
                         break;
-                    case 'gravity_sort': {
-                        refresh(0, 0);
-                        rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
-                        doGravitySort(rarr);
-                    }
+                    case 'gravity_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doGravitySort(rarr);
+                        }
+                        break;
+                    case 'cocktail_merge_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doCocktailMergeSort(rarr);
+                        }
                         break;
                 }
             };

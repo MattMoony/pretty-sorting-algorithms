@@ -367,6 +367,22 @@ async function doGravitySort(rarr) {
 
     document.getElementById('algorithm_settings').style.display = "block";
 }
+async function doCocktailMergeSort(rarr) {
+    document.getElementById('algorithm_settings').style.display = "none";
+
+    glob_comp = 0;
+    glob_movm = 0;
+
+    // -- MERGE SORT -- //
+    document.getElementById('algorithm_div').innerHTML = "Cocktail-MergeSort";
+    await cmSort(rarr, 0, rarr.length-1, Math.floor(rarr.length/8), glob_display_func);
+
+    glob_comp = 0;
+    glob_movm = 0;
+
+    document.getElementById('algorithm_settings').style.display = "block";
+}
+
 
 async function visualize_init(amount, upper, lower) {
     amount = amount || glob_amount;
