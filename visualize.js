@@ -468,6 +468,15 @@ async function doQuickMergeSort(rarr) {
 
     document.getElementById('algorithm_settings').style.display = "block";
 }
+async function doOddEvenSort(rarr) {
+    document.getElementById('algorithm_settings').style.display = "none";
+
+    // -- ODD EVEN SORT -- //
+    document.getElementById('algorithm_div').innerHTML = "OddEvenSort";
+    await oeSort(rarr, glob_display_func);
+
+    document.getElementById('algorithm_settings').style.display = "block";
+}
 
 
 async function visualize_init(amount, upper, lower) {

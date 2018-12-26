@@ -170,6 +170,7 @@
                     <option value="gnome_sort">GnomeSort</option>
                     <option value="cocktail_sort">CocktailShaker-Sort</option>
                     <option value="cocktail_merge_sort">Cocktail-MergeSort</option>
+                    <option value="odd_even_sort">OddEvenSort</option>
 
                     <option value="slow_sort">SlowSort</option>
                     <option value="stooge_sort">StoogeSort</option>
@@ -252,6 +253,7 @@
     <script src="algos/gravity_sort.js"></script>
     <script src="algos/cocktail_merge.js"></script>
     <script src="algos/quick_merge_sort.js"></script>
+    <script src="algos/odd_even_sort.js"></script>
 
     <script src="visualize.js"></script>
 
@@ -487,6 +489,13 @@
                             refresh(0, 0);
                             rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
                             doQuickMergeSort(rarr);
+                        }
+                        break;
+                    case 'odd_even_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doOddEvenSort(rarr);
                         }
                         break;
                 }
