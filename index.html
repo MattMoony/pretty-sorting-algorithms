@@ -167,6 +167,7 @@
                     <option value="comb_sort">CombSort</option>
 
                     <option value="quick_merge_sort">Quick-MergeSort</option>
+                    <option value="weave_sort">WeaveSort</option>
                     <option value="gnome_sort">GnomeSort</option>
                     <option value="cocktail_sort">CocktailShaker-Sort</option>
                     <option value="cocktail_merge_sort">Cocktail-MergeSort</option>
@@ -256,6 +257,7 @@
     <script src="algos/quick_merge_sort.js"></script>
     <script src="algos/odd_even_sort.js"></script>
     <script src="algos/odd_even_merge_sort.js"></script>
+    <script src="algos/weave_sort.js"></script>
 
     <script src="visualize.js"></script>
 
@@ -505,6 +507,13 @@
                             refresh(0, 0);
                             rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
                             doOddEvenMergeSort(rarr);
+                        }
+                        break;
+                    case 'weave_sort':
+                        {
+                            refresh(0, 0);
+                            rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+                            doWeaveSort(rarr);
                         }
                         break;
                 }
