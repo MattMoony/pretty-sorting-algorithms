@@ -40,4 +40,6 @@ async function oeSort(a, display) {
             refresh(movm, comp);
         }
     }
+
+    return new Promise(resolve => resolve(a));
 }

@@ -192,7 +192,7 @@ function draw_semi_random(amount, upper, lower, display) {
 
 // ------------------------------ GLOBALS ------------------------------------------------------------- //
 
-var glob_amount = 1000,
+var glob_amount = 256,
     glob_lower = 0,
     glob_upper = 150,
     glob_sleep_time = 1,
@@ -474,6 +474,21 @@ async function doOddEvenSort(rarr) {
     // -- ODD EVEN SORT -- //
     document.getElementById('algorithm_div').innerHTML = "OddEvenSort";
     await oeSort(rarr, glob_display_func);
+
+    document.getElementById('algorithm_settings').style.display = "block";
+}
+async function doOddEvenMergeSort(rarr) {
+    document.getElementById('algorithm_settings').style.display = "none";
+
+    glob_comp = 0;
+    glob_movm = 0;
+
+    // -- ODD-EVEN MERGE SORT -- //
+    document.getElementById('algorithm_div').innerHTML = "OddEven-MergeSort";
+    await oemSort(rarr, 0, rarr.length-1, Math.floor(rarr.length/8), glob_display_func);
+
+    glob_comp = 0;
+    glob_movm = 0;
 
     document.getElementById('algorithm_settings').style.display = "block";
 }
