@@ -56,7 +56,7 @@ async function treeSort(a, display) {
         movm++;
         refresh(movm, comp);
 
-        display(a);
+        display(a, [i]);
         await sleep(glob_sleep_time);
     }
 

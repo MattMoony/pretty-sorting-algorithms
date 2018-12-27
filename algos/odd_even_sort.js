@@ -15,7 +15,7 @@ async function oeSort(a, display) {
                 sorted = false;
                 movm+=2;
 
-                display(a);
+                display(a, [i, i+1]);
                 await sleep(glob_sleep_time);
             }
 
@@ -32,7 +32,7 @@ async function oeSort(a, display) {
                 sorted = false;
                 movm+=2;
 
-                display(a);
+                display(a, [i, i+1]);
                 await sleep(glob_sleep_time);
             }
 

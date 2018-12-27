@@ -13,7 +13,7 @@ async function gnomeSort(a, display) {
 
             movm+=2;
 
-            display(a);
+            display(a, [i, i+1]);
             await sleep(glob_sleep_time);
 
             i-=2;

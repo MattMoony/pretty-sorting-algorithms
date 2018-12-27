@@ -2,9 +2,9 @@ async function cmSort(a, l, r, threshold, display) {
     glob_comp++;
     refresh(glob_movm, glob_comp);
 
-    if (r-l <= threshold) {
+    if (r - l <= threshold) {
         await cocktailmSort(a, l, r, display);
-        return new Promise(resolve => resolve(a.slice(l, r+1)));
+        return new Promise(resolve => resolve(a.slice(l, r + 1)));
     }
 
     let a1 = await cmSort(a, l, Math.floor((l + r) / 2), threshold, display),
@@ -26,7 +26,7 @@ async function cmSort(a, l, r, threshold, display) {
 
         refresh(glob_movm, glob_comp);
 
-        display(a);
+        display(a, [i]);
         await sleep(glob_sleep_time);
 
         i++;
@@ -37,24 +37,24 @@ async function cmSort(a, l, r, threshold, display) {
 
     for (let j = i; j < a3.length; j++) {
         a[j] = a3[j];
-    }
 
-    display(a);
-    await sleep(glob_sleep_time);
+        display(a, [j]);
+        await sleep(glob_sleep_time);
+    }
 
     return new Promise(resolve => resolve(a3));
 }
 
 async function cocktailmSort(a, l, r, display) {
-    while (l<r) {
+    while (l < r) {
         for (let i = l; i < r; i++) {
-            if (a[i]>a[i+1]) {
+            if (a[i] > a[i + 1]) {
                 let temp = a[i];
-                a[i] = a[i+1];
-                a[i+1] = temp;
+                a[i] = a[i + 1];
+                a[i + 1] = temp;
 
-                glob_movm+=2;
-                display(a);
+                glob_movm += 2;
+                display(a, [i, i+1]);
 
                 await sleep(glob_sleep_time);
             }
@@ -65,13 +65,13 @@ async function cocktailmSort(a, l, r, display) {
         r--;
 
         for (let i = r; i > l; i--) {
-            if (a[i]<a[i-1]) {
+            if (a[i] < a[i - 1]) {
                 let temp = a[i];
-                a[i] = a[i-1];
-                a[i-1] = temp;
+                a[i] = a[i - 1];
+                a[i - 1] = temp;
 
-                glob_movm+=2;
-                display(a);
+                glob_movm += 2;
+                display(a, [i, i-1]);
 
                 await sleep(glob_sleep_time);
             }

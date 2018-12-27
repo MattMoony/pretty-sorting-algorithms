@@ -18,7 +18,7 @@ async function qSort(a, l, r, display) {
 
         glob_movm++;
         refresh(glob_movm, glob_comp);
-        display(a);
+        display(a, [l, r]);
         await sleep(glob_sleep_time);
     }
 
@@ -28,6 +28,7 @@ async function qSort(a, l, r, display) {
 
     glob_movm++;
     refresh(glob_movm, glob_comp);
+    display(a, [l, p]);
     await sleep(glob_sleep_time);
 
     if (l - 1 - old_l >= 1) {

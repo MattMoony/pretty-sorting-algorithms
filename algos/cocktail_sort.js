@@ -13,7 +13,7 @@ async function cocktailSort(a, display) {
                 a[i+1] = temp;
 
                 movm+=2;
-                display(a);
+                display(a, [i, i+1]);
 
                 await sleep(glob_sleep_time);
             }
@@ -30,7 +30,7 @@ async function cocktailSort(a, display) {
                 a[i-1] = temp;
 
                 movm+=2;
-                display(a);
+                display(a, [i, i-1]);
 
                 await sleep(glob_sleep_time);
             }

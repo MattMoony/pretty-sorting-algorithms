@@ -20,7 +20,7 @@ async function sSort(a, display) {
 
         movm++;
         refresh(movm, comp);
-        display(a);
+        display(a, [i, min]);
         
         await sleep(glob_sleep_time);
     }

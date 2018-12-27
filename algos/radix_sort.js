@@ -22,7 +22,7 @@ async function rSort_i(a, display) {
         movm++;
 
         refresh(movm, comp);
-        display(a);
+        display(a, [i]);
         await sleep(glob_sleep_time);
     }
 
@@ -54,7 +54,7 @@ async function iSortR(a, display, comp, movm) {
                 movm++;
 
                 refresh(movm, comp);
-                display(a);
+                display(a, [j+1, j]);
             } else {
                 break;
             }
@@ -64,7 +64,7 @@ async function iSortR(a, display, comp, movm) {
         movm++;
 
         refresh(movm, comp);
-        display(a);
+        display(a, [i, j+1]);
         await sleep(glob_sleep_time);
     }
 
@@ -94,7 +94,7 @@ async function rSort_c(a, display) {
         movm++;
 
         refresh(movm, comp);
-        display(a);
+        display(a, [i]);
         await sleep(glob_sleep_time);
     }
 
@@ -142,7 +142,7 @@ async function cSortR(a, display, comp, movm) {
 
         movm++;
 
-        display(e);
+        display(e, [c_a[parseInt(a[i][currStep])], i]);
         refresh(movm, comp);
         await sleep(glob_sleep_time);
     }

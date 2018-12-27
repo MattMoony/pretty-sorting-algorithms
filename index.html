@@ -230,7 +230,7 @@
     </table>
 
     <div id="canvas_div">
-        <canvas id="main" width="800" height="700"></canvas>
+        <canvas id="main" width="805" awidth="800" height="700"></canvas>
     </div>
 
     <script src="algos/quick_sort.js"></script>
@@ -268,7 +268,7 @@
             ctx = cnvs.getContext('2d');
 
             canvas = {
-                width: document.getElementById('main').width,
+                width: document.getElementById('main').attributes["awidth"].value,
                 height: document.getElementById('main').height
             };
 

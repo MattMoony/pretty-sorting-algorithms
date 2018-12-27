@@ -24,7 +24,7 @@ async function iSort(a, display) {
         movm++;
         refresh(movm, comp);
 
-        display(a);
+        display(a, [i, j+1]);
         await sleep(glob_sleep_time);
     }
 }

@@ -8,33 +8,38 @@ function refresh(movm, comp) {
     document.getElementById('runtime').innerHTML = ((new Date()).getTime()-glob_stime)/1000.0;
 }
 
-function display_array_pillars(arr) {
+function display_array_pillars(arr, focused_els_i) {
+    focused_els_i = focused_els_i || [];
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let scale = canvas.height/Math.max(...arr);
 
-    for (let i = canvas.width/(arr.length-1); i < canvas.width; i+=canvas.width/(arr.length-1)) {
+    for (let i = canvas.width/(arr.length+1); i <= canvas.width; i+=canvas.width/(arr.length+1)) {
         ctx.beginPath();
-        ctx.strokeStyle = "black";
+
+        ctx.strokeStyle = focused_els_i.includes(Math.floor(i/(canvas.width/(arr.length+1)))) ? "red" : "dimgray";
+        ctx.lineWidth = focused_els_i.includes(Math.floor(i/(canvas.width/(arr.length+1)))) ? 4 : 1;
+
         ctx.moveTo(i, canvas.height);
-        ctx.lineTo(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale));
+        ctx.lineTo(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length+1)))-1]*scale));
         ctx.stroke();
     }
 }
-function display_array_color_pillars(arr, line_weight) {
+function display_array_color_pillars(arr) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let scale = canvas.height/Math.max(...arr);
 
-    line_weight = line_weight || 2;
-    let arr_max = Math.max(...arr);
+    let line_weight = 2,
+        arr_max = Math.max(...arr);
 
-    for (let i = canvas.width/(arr.length-1); i < canvas.width; i+=canvas.width/(arr.length-1)) {
+    for (let i = canvas.width/(arr.length-1); i <= canvas.width; i+=canvas.width/(arr.length-1)) {
         ctx.beginPath();
 
         ctx.strokeStyle = "hsl(" + arr[Math.floor(i/(canvas.width/(arr.length-1)))] * (360/arr_max) + ", 100%, 50%)";
         ctx.lineWidth = line_weight;
 
         ctx.moveTo(i, canvas.height);
-        ctx.lineTo(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale));
+        ctx.lineTo(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))-1]*scale));
 
         ctx.stroke();
     }
@@ -50,11 +55,11 @@ function display_array_pillar_spiral(arr) {
         ctx.stroke();
     }
 }
-function display_array_color_pillar_spiral(arr, line_weight) {
+function display_array_color_pillar_spiral(arr) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    line_weight = line_weight || 2;
-    let arr_max = Math.max(...arr);
+    let line_weight = 2,
+        arr_max = Math.max(...arr);
 
     for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
         ctx.beginPath();
@@ -69,9 +74,9 @@ function display_array_color_pillar_spiral(arr, line_weight) {
         ctx.stroke();
     }
 }
-function display_array_color_circle(arr, line_weight) {
-    let arr_max = Math.max(...arr);
-    line_weight = line_weight || 3;
+function display_array_color_circle(arr) {
+    let arr_max = Math.max(...arr),
+        line_weight = 3;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let r = canvas.width/3;
@@ -90,8 +95,8 @@ function display_array_color_circle(arr, line_weight) {
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
 }
-function display_array_dots(arr, radius) {
-    radius = radius || 2;
+function display_array_dots(arr) {
+    let radius = 2;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let scale = canvas.height/Math.max(...arr);
@@ -103,8 +108,8 @@ function display_array_dots(arr, radius) {
         ctx.fill();
     }
 }
-function display_array_color_dots(arr, radius) {
-    radius = radius || 2;
+function display_array_color_dots(arr) {
+    let radius = 2;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let scale = canvas.height/Math.max(...arr),
@@ -117,9 +122,9 @@ function display_array_color_dots(arr, radius) {
         ctx.fill();
     }
 }
-function display_array_dots_spiral(arr, radius) {
+function display_array_dots_spiral(arr) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    radius = radius || 2;
+    let radius = 2;
 
     for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
         ctx.beginPath();
@@ -129,10 +134,10 @@ function display_array_dots_spiral(arr, radius) {
         ctx.fill();
     }
 }
-function display_array_color_dots_spiral(arr, radius) {
+function display_array_color_dots_spiral(arr) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    radius = radius || 2;
-    let arr_max = Math.max(...arr);
+    let radius = 2,
+        arr_max = Math.max(...arr);
 
     for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
         ctx.beginPath();
@@ -142,9 +147,9 @@ function display_array_color_dots_spiral(arr, radius) {
         ctx.fill();
     }
 }
-function display_array_color_circle_dots(arr, radius) {
-    let arr_max = Math.max(...arr);
-    radius = radius || 3;
+function display_array_color_circle_dots(arr) {
+    let arr_max = Math.max(...arr),
+        radius = 3;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let r = canvas.width/3;
@@ -430,6 +435,9 @@ async function doDSelectionSort(rarr) {
     document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doGravitySort(rarr) {
+    glob_movm = 0;
+    glob_comp = 0;
+
     document.getElementById('algorithm_settings').style.display = "none";
 
     // -- GRAVITY SORT -- //
@@ -437,6 +445,9 @@ async function doGravitySort(rarr) {
     await gravitySort(rarr, glob_display_func);
 
     document.getElementById('algorithm_settings').style.display = "block";
+
+    glob_movm = 0;
+    glob_comp = 0;
 }
 async function doCocktailMergeSort(rarr) {
     document.getElementById('algorithm_settings').style.display = "none";

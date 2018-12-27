@@ -13,7 +13,7 @@ async function shellSort(a, display) {
 
                 movm+=2;
                 refresh(movm, comp);
-                display(a);
+                display(a, [cu, cu-gap]);
                 
                 cu = cu-gap;
             }

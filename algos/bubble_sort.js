@@ -13,7 +13,7 @@ async function bSort(a, display) {
                 comp++;
 
                 refresh(movm, comp);
-                display(a);
+                display(a, [i, j]);
                 await sleep(glob_sleep_time);
             }
         }

@@ -20,7 +20,7 @@ async function bitSort_rec(a, l, r, display) {
             glob_movm+=2;
 
             refresh(glob_movm, glob_comp);
-            display(a);
+            display(a, [x, y]);
             await sleep(glob_sleep_time);
         }
     }
@@ -42,7 +42,7 @@ async function bitSubSort(a, l, r, display) {
             glob_movm+=2;
 
             refresh(glob_movm, glob_comp);
-            display(a);
+            display(a, [x, y]);
             await sleep(glob_sleep_time);
         }
     }

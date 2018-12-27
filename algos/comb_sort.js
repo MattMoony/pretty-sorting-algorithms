@@ -21,7 +21,7 @@ async function combSort(a, display) {
 
                 movm += 2;
 
-                display(a);
+                display(a, [i, i+gap]);
                 await sleep(glob_sleep_time);
             }
 

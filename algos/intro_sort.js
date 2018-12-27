@@ -49,7 +49,7 @@ async function quickPartition(a, l, r, display) {
         glob_movm += 2;
         refresh(glob_movm, glob_comp);
 
-        display(a);
+        display(a, [l, r]);
         await sleep(glob_sleep_time)
     }
 
@@ -57,7 +57,7 @@ async function quickPartition(a, l, r, display) {
     a[l] = a[p];
     a[p] = t;
 
-    display(a);
+    display(a, [l, p]);
     await sleep(glob_sleep_time);
 
     return new Promise(resolve => resolve(l));

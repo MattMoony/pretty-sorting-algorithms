@@ -33,7 +33,7 @@ async function shuffle(a, display, stats) {
         stats.movm+=2;
         refresh(stats.movm, stats.comp);
         
-        display(a);
+        display(a, [i, rindex]);
         await sleep(glob_sleep_time);
     }
 }

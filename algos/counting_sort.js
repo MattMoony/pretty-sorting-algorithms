@@ -1,3 +1,11 @@
+function allOccurrencesOf(a, e) {
+    var indexes = [], i = -1;
+    while((i=a.indexOf(e, i+1))!=-1)
+        indexes.push(i);
+
+    return indexes;
+}
+
 async function cSort(a, display) {
     let c_a = [],
         movm = 0,
@@ -14,7 +22,9 @@ async function cSort(a, display) {
             }
         }
 
+        display(a, allOccurrencesOf(a, i));
         await sleep(glob_sleep_time);
+
         c_a.push(count);
     }
 
@@ -30,7 +40,7 @@ async function cSort(a, display) {
 
         movm++;
 
-        await display(e);
+        await display(e, [c_a[a[i]-Math.min(...a)], i]);
         refresh(movm, comp);
 
         await sleep(glob_sleep_time);

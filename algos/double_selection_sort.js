@@ -24,7 +24,7 @@ async function dSelectionSort(a, display) {
         movm+=2;
         refresh(movm, comp);
 
-        display(a);
+        display(a, [l, min]);
         await sleep(glob_sleep_time);
 
         // -- MAXMIMUM -- //
@@ -45,7 +45,7 @@ async function dSelectionSort(a, display) {
         movm+=2;
         refresh(movm, comp);
 
-        display(a);
+        display(a, [r, max]);
         await sleep(glob_sleep_time);
     }
 }
