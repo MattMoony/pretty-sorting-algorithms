@@ -8,6 +8,24 @@ function refresh(movm, comp) {
     document.getElementById('runtime').innerHTML = ((new Date()).getTime() - glob_stime) / 1000.0;
 }
 
+function changeTheme(theme) {
+    var xhtp = new XMLHttpRequest();
+    xhtp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementsByTagName('style')[0].innerHTML = this.responseText;
+        }
+    }
+
+    var avThemes = ["dark", "light"];
+    if (!avThemes.includes(theme))
+        return -1;
+
+    glob_theme = theme;
+
+    xhtp.open("GET", "themes/" + theme + ".css");
+    xhtp.send();
+}
+
 function display_array_pillars(arr, focused_els_i) {
     focused_els_i = focused_els_i || [];
 
@@ -17,8 +35,8 @@ function display_array_pillars(arr, focused_els_i) {
     for (let i = canvas.width / (arr.length + 1); i <= canvas.width; i += canvas.width / (arr.length + 1)) {
         ctx.beginPath();
 
-        ctx.strokeStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : "dimgray";
-        ctx.lineWidth = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 4 : 1;
+        ctx.strokeStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : glob_themes[glob_theme]["color"];
+        ctx.lineWidth = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 4 : 2;
 
         ctx.moveTo(i, canvas.height);
         ctx.lineTo(i, canvas.height - (arr[Math.floor(i / (canvas.width / (arr.length + 1))) - 1] * scale));
@@ -51,8 +69,8 @@ function display_array_pillar_spiral(arr, focused_els_i) {
     for (let i = 360 / (arr.length - 1), c = 0; i < 360; i += 360 / (arr.length - 1), c++) {
         ctx.beginPath();
 
-        ctx.strokeStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : "dimgray";
-        ctx.lineWidth = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 4 : 1;
+        ctx.strokeStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : glob_themes[glob_theme]["color"];
+        ctx.lineWidth = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 4 : 2;
 
         ctx.moveTo(canvas.width / 2, canvas.height / 2);
         ctx.lineTo((canvas.width / 2) + arr[c] * Math.cos(Math.PI * i / 180.0), (canvas.height / 2) + arr[c] * Math.sin(Math.PI * i / 180.0));
@@ -108,7 +126,7 @@ function display_array_dots(arr, focused_els_i) {
 
     for (let i = canvas.width / (arr.length - 1); i < canvas.width; i += canvas.width / (arr.length - 1)) {
         ctx.beginPath();
-        ctx.fillStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : "dimgray";
+        ctx.fillStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : glob_themes[glob_theme]["color"];
 
         ctx.ellipse(i, canvas.height - (arr[Math.floor(i / (canvas.width / (arr.length - 1)))] * scale),
             focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 2 * radius : radius,
@@ -137,7 +155,7 @@ function display_array_dots_spiral(arr, focused_els_i) {
 
     for (let i = 360 / (arr.length - 1), c = 0; i < 360; i += 360 / (arr.length - 1), c++) {
         ctx.beginPath();
-        ctx.fillStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : "dimgray";
+        ctx.fillStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : glob_themes[glob_theme]["color"];
 
         ctx.ellipse((canvas.width / 2) + arr[c] * Math.cos(Math.PI * i / 180.0), (canvas.height / 2) + arr[c] * Math.sin(Math.PI * i / 180.0),
             focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 2 * radius : radius,
@@ -215,7 +233,16 @@ var glob_amount = 256,
     glob_sleep_between = 1000,
     glob_display_func = display_array_color_circle,
     glob_random_func = draw_semi_random,
-    glob_stime = (new Date()).getTime();
+    glob_stime = (new Date()).getTime(),
+    glob_theme = "light",
+    glob_themes = {
+        "light": {
+            "color": "dimgray"
+        },
+        "dark": {
+            "color": "white"
+        }
+    };
 
 var glob_comp = 0,
     glob_movm = 0;

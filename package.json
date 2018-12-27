@@ -1,0 +1,23 @@
+{
+  "name": "sorting_visualization",
+  "version": "1.0.0",
+  "description": "Pretty representations of popular sorting algorithms.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattMoony/pretty-sorting-algorithms.git"
+  },
+  "author": "MattMoony",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MattMoony/pretty-sorting-algorithms/issues"
+  },
+  "homepage": "https://github.com/MattMoony/pretty-sorting-algorithms#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}

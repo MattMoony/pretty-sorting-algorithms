@@ -56,6 +56,14 @@ td {
     color: tomato;
 }
 
+#theme_div {
+    position: fixed;
+    left: 25px;
+    bottom: 25px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-left: 1.5px solid dimgray;
+    border-radius: 2.5px;
+}
 
 #algorithm_settings {
     border-left: 1.5px solid dimgray;
@@ -75,6 +83,7 @@ input {
     padding: 2.5px 7.5px;
     border: 1px solid #cecece;
     border-radius: 1px;
+    background-color: rgba(0,0,0,0);
 }
 
 select:focus,

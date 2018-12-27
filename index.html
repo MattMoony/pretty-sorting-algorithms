@@ -6,11 +6,26 @@
     <meta charset="utf-8" />
 
     <link rel="stylesheet" type="text/css" href="./index.css" />
-    <link rel="stylesheet" type="text/css" href="themes/dark.css" />
+    <link rel="stylesheet" type="text/css" href="themes/light.css" />
 </head>
 
 <body>
+    <style>
+    </style>
+
     <h1><span class='important_letter'>S</span>orting <span class='important_letter'>A</span>lgorithms</h1>
+
+    <div id="theme_div">
+        <table>
+            <tr>
+                <td><label for="theme_in">Theme: </label></td>
+                <td><select id="theme_in">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select></td>
+            </tr>
+        </table>
+    </div>
 
     <div id="score_div">
         <table>
@@ -157,6 +172,10 @@
             canvas = {
                 width: document.getElementById('main').attributes["awidth"].value,
                 height: document.getElementById('main').height
+            };
+
+            document.getElementById('theme_in').onchange = e => {
+                changeTheme(e.target.value);
             };
 
             document.getElementById('submit_start').onclick = e => {

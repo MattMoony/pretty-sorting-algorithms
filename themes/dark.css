@@ -5,9 +5,9 @@ body {
 h1 {
     border-bottom: 2px solid white;
 }
-#algorithm_settings {
-    border-left: 1.5px solid whitesmoke;
-    background-color: white;
+#algorithm_settings, #theme_div {
+    border: 1.5px solid dimgray;
+    background-color: whitesmoke;
     border-radius: 2.5px;
     color: black;
 }
@@ -16,7 +16,7 @@ h1 {
 }
 select,
 input {
-    border: 1px solid whitesmoke;
+    border: 1px solid #cecece;
 }
 canvas {
     background-color: black;
