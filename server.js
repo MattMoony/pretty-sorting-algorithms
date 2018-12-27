@@ -1,6 +1,7 @@
 const express = require('express'),
     app = express(),
     path = require('path'),
+    fs = require('fs'),
     config = require('./config.json');
 
 app.get('/index.css', (req, res) => {
@@ -14,7 +15,22 @@ app.use("/themes", express.static(path.join(__dirname, "themes/")));
 app.use("/algos", express.static(path.join(__dirname, "algos/")));
 
 app.get('/:theme', (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    switch (req.params.theme) {
+        case 'dark':
+            {
+                fs.readFile(path.join(__dirname, "index.html"), (err, data) => {
+                    if (err) throw err;
+                    
+                    let script = "changeTheme(\"dark\");";
+                    res.send(data.toString().substring(0, data.toString().lastIndexOf('</script>')) + script + 
+                        data.toString().substring(data.toString().lastIndexOf('</script>')));
+                });
+            }
+            break;
+        default:
+            res.sendFile(path.join(__dirname, "index.html"));
+            break;
+    }
 });
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));

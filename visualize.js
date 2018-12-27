@@ -21,6 +21,10 @@ function changeTheme(theme) {
         return -1;
 
     glob_theme = theme;
+    if (document.getElementById('theme_in')!==null)
+        document.getElementById('theme_in').value = theme;
+
+    window.history.pushState(`${theme.toUpperCase()}-THEME`, 'Changed theme ... ', `/${theme}`);
 
     xhtp.open("GET", "themes/" + theme + ".css");
     xhtp.send();
