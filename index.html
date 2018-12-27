@@ -177,6 +177,12 @@
             document.getElementById('theme_in').onchange = e => {
                 changeTheme(e.target.value);
             };
+            document.onkeyup = e => {
+                if (e.keyCode == 13) {
+                    if (document.getElementById('algorithm_settings').style.display == "block")
+                        document.getElementById('submit_start').click();
+                }
+            };
 
             document.getElementById('submit_start').onclick = e => {
                 let algo = document.getElementById('algorithm_input').value,
