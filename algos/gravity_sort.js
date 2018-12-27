@@ -41,10 +41,9 @@ async function gravitySort(a, display) {
         await sleep(glob_sleep_time);
     }
 
-    console.log(g.length + ", " + a.length);
-
     // PUTTING INTO ARRAY
     await beads_to_array(g, a);
+    display(a);
 }
 
 async function beads_to_array(g, a) {

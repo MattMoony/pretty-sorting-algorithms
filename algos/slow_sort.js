@@ -4,8 +4,8 @@ async function slowSort(a, l, r, display) {
 
     let c = Math.floor((l + r) / 2);
 
-    slowSort(a, l, c, display);
-    slowSort(a, c + 1, r, display);
+    await slowSort(a, l, c, display);
+    await slowSort(a, c + 1, r, display);
 
     if (a[c] > a[r]) {
         let temp = a[c];
@@ -21,5 +21,5 @@ async function slowSort(a, l, r, display) {
 
     refresh(glob_movm, glob_comp);
 
-    slowSort(a, l, r - 1, display);
+    await slowSort(a, l, r - 1, display);
 }

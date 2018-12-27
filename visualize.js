@@ -5,53 +5,57 @@ function sleep(ms) {
 function refresh(movm, comp) {
     document.getElementById('comparisons').innerHTML = comp;
     document.getElementById('movements').innerHTML = movm;
-    document.getElementById('runtime').innerHTML = ((new Date()).getTime()-glob_stime)/1000.0;
+    document.getElementById('runtime').innerHTML = ((new Date()).getTime() - glob_stime) / 1000.0;
 }
 
 function display_array_pillars(arr, focused_els_i) {
     focused_els_i = focused_els_i || [];
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let scale = canvas.height/Math.max(...arr);
+    let scale = canvas.height / Math.max(...arr);
 
-    for (let i = canvas.width/(arr.length+1); i <= canvas.width; i+=canvas.width/(arr.length+1)) {
+    for (let i = canvas.width / (arr.length + 1); i <= canvas.width; i += canvas.width / (arr.length + 1)) {
         ctx.beginPath();
 
-        ctx.strokeStyle = focused_els_i.includes(Math.floor(i/(canvas.width/(arr.length+1)))) ? "red" : "dimgray";
-        ctx.lineWidth = focused_els_i.includes(Math.floor(i/(canvas.width/(arr.length+1)))) ? 4 : 1;
+        ctx.strokeStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : "dimgray";
+        ctx.lineWidth = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 4 : 1;
 
         ctx.moveTo(i, canvas.height);
-        ctx.lineTo(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length+1)))-1]*scale));
+        ctx.lineTo(i, canvas.height - (arr[Math.floor(i / (canvas.width / (arr.length + 1))) - 1] * scale));
         ctx.stroke();
     }
 }
 function display_array_color_pillars(arr) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let scale = canvas.height/Math.max(...arr);
+    let scale = canvas.height / Math.max(...arr);
 
     let line_weight = 2,
         arr_max = Math.max(...arr);
 
-    for (let i = canvas.width/(arr.length-1); i <= canvas.width; i+=canvas.width/(arr.length-1)) {
+    for (let i = canvas.width / (arr.length - 1); i <= canvas.width; i += canvas.width / (arr.length - 1)) {
         ctx.beginPath();
 
-        ctx.strokeStyle = "hsl(" + arr[Math.floor(i/(canvas.width/(arr.length-1)))] * (360/arr_max) + ", 100%, 50%)";
+        ctx.strokeStyle = "hsl(" + arr[Math.floor(i / (canvas.width / (arr.length - 1)))] * (360 / arr_max) + ", 100%, 50%)";
         ctx.lineWidth = line_weight;
 
         ctx.moveTo(i, canvas.height);
-        ctx.lineTo(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))-1]*scale));
+        ctx.lineTo(i, canvas.height - (arr[Math.floor(i / (canvas.width / (arr.length - 1))) - 1] * scale));
 
         ctx.stroke();
     }
 }
-function display_array_pillar_spiral(arr) {
+function display_array_pillar_spiral(arr, focused_els_i) {
+    focused_els_i = focused_els_i || [];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
+    for (let i = 360 / (arr.length - 1), c = 0; i < 360; i += 360 / (arr.length - 1), c++) {
         ctx.beginPath();
-        ctx.strokeStyle = "black";
-        ctx.moveTo(canvas.width/2, canvas.height/2);
-        ctx.lineTo((canvas.width/2) + arr[c] *Math.cos(Math.PI*i/180.0), (canvas.height/2) + arr[c] *Math.sin(Math.PI*i/180.0));
+
+        ctx.strokeStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : "dimgray";
+        ctx.lineWidth = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 4 : 1;
+
+        ctx.moveTo(canvas.width / 2, canvas.height / 2);
+        ctx.lineTo((canvas.width / 2) + arr[c] * Math.cos(Math.PI * i / 180.0), (canvas.height / 2) + arr[c] * Math.sin(Math.PI * i / 180.0));
         ctx.stroke();
     }
 }
@@ -61,14 +65,14 @@ function display_array_color_pillar_spiral(arr) {
     let line_weight = 2,
         arr_max = Math.max(...arr);
 
-    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
+    for (let i = 360 / (arr.length - 1), c = 0; i < 360; i += 360 / (arr.length - 1), c++) {
         ctx.beginPath();
 
-        ctx.strokeStyle = "hsl(" + arr[c] * (360/arr_max) + ", 100%, 50%)";
+        ctx.strokeStyle = "hsl(" + arr[c] * (360 / arr_max) + ", 100%, 50%)";
         ctx.lineWidth = line_weight;
 
-        ctx.moveTo(canvas.width/2, canvas.height/2);
-        ctx.lineTo((canvas.width/2) + arr[c] *Math.cos(Math.PI*i/180.0), (canvas.height/2) + arr[c] *Math.sin(Math.PI*i/180.0));
+        ctx.moveTo(canvas.width / 2, canvas.height / 2);
+        ctx.lineTo((canvas.width / 2) + arr[c] * Math.cos(Math.PI * i / 180.0), (canvas.height / 2) + arr[c] * Math.sin(Math.PI * i / 180.0));
 
 
         ctx.stroke();
@@ -79,32 +83,36 @@ function display_array_color_circle(arr) {
         line_weight = 3;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let r = canvas.width/3;
+    let r = canvas.width / 3;
 
-    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
+    for (let i = 360 / (arr.length - 1), c = 0; i < 360; i += 360 / (arr.length - 1), c++) {
         ctx.beginPath();
 
-        ctx.strokeStyle = "hsl(" + arr[c] * (360/arr_max) + ", 100%, 50%)";
+        ctx.strokeStyle = "hsl(" + arr[c] * (360 / arr_max) + ", 100%, 50%)";
         ctx.lineWidth = line_weight;
 
-        ctx.moveTo(canvas.width/2, canvas.height/2);
-        ctx.lineTo((canvas.width/2) + r*Math.cos(Math.PI*i/180.0), (canvas.height/2) + r*Math.sin(Math.PI*i/180.0));
+        ctx.moveTo(canvas.width / 2, canvas.height / 2);
+        ctx.lineTo((canvas.width / 2) + r * Math.cos(Math.PI * i / 180.0), (canvas.height / 2) + r * Math.sin(Math.PI * i / 180.0));
         ctx.stroke();
     }
 
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
 }
-function display_array_dots(arr) {
+function display_array_dots(arr, focused_els_i) {
+    focused_els_i = focused_els_i || [];
     let radius = 2;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let scale = canvas.height/Math.max(...arr);
+    let scale = canvas.height / Math.max(...arr);
 
-    for (let i = canvas.width/(arr.length-1); i < canvas.width; i+=canvas.width/(arr.length-1)) {
+    for (let i = canvas.width / (arr.length - 1); i < canvas.width; i += canvas.width / (arr.length - 1)) {
         ctx.beginPath();
-        ctx.fillStyle = "black";
-        ctx.ellipse(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale), radius, radius, 0, 0, 2*Math.PI);
+        ctx.fillStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : "dimgray";
+
+        ctx.ellipse(i, canvas.height - (arr[Math.floor(i / (canvas.width / (arr.length - 1)))] * scale),
+            focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 2 * radius : radius,
+            focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 2 * radius : radius, 0, 0, 2 * Math.PI);
         ctx.fill();
     }
 }
@@ -112,25 +120,28 @@ function display_array_color_dots(arr) {
     let radius = 2;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let scale = canvas.height/Math.max(...arr),
+    let scale = canvas.height / Math.max(...arr),
         arr_max = Math.max(...arr);
 
-    for (let i = canvas.width/(arr.length-1); i < canvas.width; i+=canvas.width/(arr.length-1)) {
+    for (let i = canvas.width / (arr.length - 1); i < canvas.width; i += canvas.width / (arr.length - 1)) {
         ctx.beginPath();
-        ctx.fillStyle = "hsl(" + arr[Math.floor(i/(canvas.width/(arr.length-1)))] * (360/arr_max) + ", 100%, 50%)";
-        ctx.ellipse(i, canvas.height-(arr[Math.floor(i/(canvas.width/(arr.length-1)))]*scale), radius, radius, 0, 0, 2*Math.PI);
+        ctx.fillStyle = "hsl(" + arr[Math.floor(i / (canvas.width / (arr.length - 1)))] * (360 / arr_max) + ", 100%, 50%)";
+        ctx.ellipse(i, canvas.height - (arr[Math.floor(i / (canvas.width / (arr.length - 1)))] * scale), radius, radius, 0, 0, 2 * Math.PI);
         ctx.fill();
     }
 }
-function display_array_dots_spiral(arr) {
+function display_array_dots_spiral(arr, focused_els_i) {
+    focused_els_i = focused_els_i || [];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let radius = 2;
 
-    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
+    for (let i = 360 / (arr.length - 1), c = 0; i < 360; i += 360 / (arr.length - 1), c++) {
         ctx.beginPath();
-        ctx.fillStyle = "black";
-        ctx.ellipse((canvas.width/2) + arr[c] *Math.cos(Math.PI*i/180.0), (canvas.height/2) + arr[c] *Math.sin(Math.PI*i/180.0), radius,
-            radius, 0, 0, 2*Math.PI);
+        ctx.fillStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : "dimgray";
+
+        ctx.ellipse((canvas.width / 2) + arr[c] * Math.cos(Math.PI * i / 180.0), (canvas.height / 2) + arr[c] * Math.sin(Math.PI * i / 180.0),
+            focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 2 * radius : radius,
+            focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 2 * radius : radius, 0, 0, 2 * Math.PI);
         ctx.fill();
     }
 }
@@ -139,11 +150,11 @@ function display_array_color_dots_spiral(arr) {
     let radius = 2,
         arr_max = Math.max(...arr);
 
-    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
+    for (let i = 360 / (arr.length - 1), c = 0; i < 360; i += 360 / (arr.length - 1), c++) {
         ctx.beginPath();
-        ctx.fillStyle = ctx.fillStyle = "hsl(" + arr[Math.floor(i/(canvas.width/(arr.length-1)))] * (360/arr_max) + ", 100%, 50%)";
-        ctx.ellipse((canvas.width/2) + arr[c] *Math.cos(Math.PI*i/180.0), (canvas.height/2) + arr[c] *Math.sin(Math.PI*i/180.0), radius,
-            radius, 0, 0, 2*Math.PI);
+        ctx.fillStyle = ctx.fillStyle = "hsl(" + arr[Math.floor(i / (canvas.width / (arr.length - 1)))] * (360 / arr_max) + ", 100%, 50%)";
+        ctx.ellipse((canvas.width / 2) + arr[c] * Math.cos(Math.PI * i / 180.0), (canvas.height / 2) + arr[c] * Math.sin(Math.PI * i / 180.0), radius,
+            radius, 0, 0, 2 * Math.PI);
         ctx.fill();
     }
 }
@@ -152,14 +163,14 @@ function display_array_color_circle_dots(arr) {
         radius = 3;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let r = canvas.width/3;
+    let r = canvas.width / 3;
 
-    for (let i = 360/(arr.length-1), c = 0; i < 360; i+=360/(arr.length-1), c++) {
+    for (let i = 360 / (arr.length - 1), c = 0; i < 360; i += 360 / (arr.length - 1), c++) {
         ctx.beginPath();
-        ctx.fillStyle = "hsl(" + arr[c] * (360/arr_max) + ", 100%, 50%)";
+        ctx.fillStyle = "hsl(" + arr[c] * (360 / arr_max) + ", 100%, 50%)";
 
-        ctx.ellipse((canvas.width/2) + r*Math.cos(Math.PI*i/180.0), (canvas.height/2) + r*Math.sin(Math.PI*i/180.0), radius,
-            radius, 0, 0, 2*Math.PI);
+        ctx.ellipse((canvas.width / 2) + r * Math.cos(Math.PI * i / 180.0), (canvas.height / 2) + r * Math.sin(Math.PI * i / 180.0), radius,
+            radius, 0, 0, 2 * Math.PI);
         ctx.fill();
     }
 
@@ -175,7 +186,7 @@ function draw_random(amount, upper, lower, display) {
     upper = upper || glob_upper;
 
     for (let i = 0; i < amount; i++)
-        arr.push(lower + Math.floor(Math.random()*(upper-lower)));
+        arr.push(lower + Math.floor(Math.random() * (upper - lower)));
     display(arr);
 
     return arr;
@@ -185,7 +196,7 @@ function draw_semi_random(amount, upper, lower, display) {
 
     for (let i = 0; i < arr.length; i++) {
         let temp = arr[i],
-            rindex = Math.floor(Math.random()*arr.length);
+            rindex = Math.floor(Math.random() * arr.length);
 
         arr[i] = arr[rindex];
         arr[rindex] = temp;
@@ -212,311 +223,155 @@ var glob_comp = 0,
 
 // ---------------------------------------------------------------------------------------------------- //
 
-async function doCountingSort(rarr) {
+async function doSortingAlgo(f) {
     document.getElementById('algorithm_settings').style.display = "none";
 
+    glob_comp = 0;
+    glob_movm = 0;
+
+    refresh(0, 0);
+    rarr = glob_random_func(glob_amount, glob_upper, glob_lower, glob_display_func);
+    await f(rarr);
+
+    glob_display_func(rarr);
+
+    glob_comp = 0;
+    glob_movm = 0;
+
+    document.getElementById('algorithm_settings').style.display = "block";
+}
+
+
+
+async function doCountingSort(rarr) {
     // -- COUNTING SORT -- //
     document.getElementById('algorithm_div').innerHTML = "CountingSort";
     await cSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doQuickSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- QUICKSORT -- // 
     document.getElementById('algorithm_div').innerHTML = "QuickSort";
-    await qSort(rarr, 0, rarr.length-1, glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
+    await qSort(rarr, 0, rarr.length - 1, glob_display_func)
 }
 async function doInsertionSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- INSERTION SORT -- //
     document.getElementById('algorithm_div').innerHTML = "InsertionSort";
     await iSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doSelectionSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- SELECTION SORT -- //
     document.getElementById('algorithm_div').innerHTML = "SelectionSort";
     await sSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doBubbleSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- SELECTION SORT -- //
     document.getElementById('algorithm_div').innerHTML = "BubbleSort";
     await bSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doHeapSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- HEAPSORT -- // 
     document.getElementById('algorithm_div').innerHTML = "HeapSort";
     await hSort(rarr, glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doRadixSort_i(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- RADIX SORT -- //
     document.getElementById('algorithm_div').innerHTML = "RadixSort [with InsertionSort]";
     await rSort_i(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doRadixSort_c(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- RADIX SORT -- //
     document.getElementById('algorithm_div').innerHTML = "RadixSort [with CountingSort]";
     await rSort_c(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doBitonicSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- BITONIC SORT -- //
     document.getElementById('algorithm_div').innerHTML = "BitonicSort";
     await bitSort(rarr, glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doShellSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- SHELL SORT -- //
     document.getElementById('algorithm_div').innerHTML = "ShellSort";
     await shellSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doMergeSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- MERGE SORT -- //
     document.getElementById('algorithm_div').innerHTML = "MergeSort";
-    await mergeSort(rarr, 0, rarr.length-1, glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
+    await mergeSort(rarr, 0, rarr.length - 1, glob_display_func);
 }
 async function doBogoSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- BOGO SORT -- //
     document.getElementById('algorithm_div').innerHTML = "BogoSort";
     await bogoSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doCocktailSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- COCKTAIL SORT -- //
     document.getElementById('algorithm_div').innerHTML = "CocktailShaker-Sort";
     await cocktailSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doGnomeSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- GNOME SORT -- //
     document.getElementById('algorithm_div').innerHTML = "GnomeSort";
     await gnomeSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doCombSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    // -- GNOME SORT -- //
+    // -- COMB SORT -- //
     document.getElementById('algorithm_div').innerHTML = "CombSort";
     await combSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doTreeSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- TREE SORT -- //
     document.getElementById('algorithm_div').innerHTML = "TreeSort";
     await treeSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doIntroSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- INTRO SORT -- //
     document.getElementById('algorithm_div').innerHTML = "IntroSort";
     await introSort(rarr, glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doSlowSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- INTRO SORT -- //
     document.getElementById('algorithm_div').innerHTML = "SlowSort";
-    await slowSort(rarr, 0, rarr.length-1, glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
+    await slowSort(rarr, 0, rarr.length - 1, glob_display_func);
 }
 async function doStoogeSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- INTRO SORT -- //
     document.getElementById('algorithm_div').innerHTML = "StoogeSort";
-    await stoogeSort(rarr, 0, rarr.length-1, glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
+    await stoogeSort(rarr, 0, rarr.length - 1, glob_display_func);
 }
 async function doDSelectionSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- DOUBLE SELECTION SORT -- //
     document.getElementById('algorithm_div').innerHTML = "Double SelectionSort";
     await dSelectionSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doGravitySort(rarr) {
-    glob_movm = 0;
-    glob_comp = 0;
-
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- GRAVITY SORT -- //
     document.getElementById('algorithm_div').innerHTML = "GravitySort";
     await gravitySort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
-
-    glob_movm = 0;
-    glob_comp = 0;
 }
 async function doCocktailMergeSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- COCKTAIL-MERGE SORT -- //
     document.getElementById('algorithm_div').innerHTML = "Cocktail-MergeSort";
-    await cmSort(rarr, 0, rarr.length-1, Math.floor(rarr.length/8), glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
+    await cmSort(rarr, 0, rarr.length - 1, Math.floor(rarr.length / 8), glob_display_func);
 }
 async function doQuickMergeSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- QUICK-MERGE SORT -- //
     document.getElementById('algorithm_div').innerHTML = "Quick-MergeSort";
-    await qmSort(rarr, 0, rarr.length-1, Math.floor(rarr.length/8), glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
+    await qmSort(rarr, 0, rarr.length - 1, Math.floor(rarr.length / 8), glob_display_func);
 }
 async function doOddEvenSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
     // -- ODD EVEN SORT -- //
     document.getElementById('algorithm_div').innerHTML = "OddEvenSort";
     await oeSort(rarr, glob_display_func);
-
-    document.getElementById('algorithm_settings').style.display = "block";
 }
 async function doOddEvenMergeSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- ODD-EVEN MERGE SORT -- //
     document.getElementById('algorithm_div').innerHTML = "OddEven-MergeSort";
-    await oemSort(rarr, 0, rarr.length-1, Math.floor(rarr.length/8), glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
+    await oemSort(rarr, 0, rarr.length - 1, Math.floor(rarr.length / 8), glob_display_func);
 }
 async function doWeaveSort(rarr) {
-    document.getElementById('algorithm_settings').style.display = "none";
-
-    glob_comp = 0;
-    glob_movm = 0;
-
     // -- ODD-EVEN MERGE SORT -- //
     document.getElementById('algorithm_div').innerHTML = "WeaveSort [Merge&Insertion]";
-    await weaveSort(rarr, 0, rarr.length-1, Math.floor(rarr.length/8), glob_display_func);
-
-    glob_comp = 0;
-    glob_movm = 0;
-
-    document.getElementById('algorithm_settings').style.display = "block";
+    await weaveSort(rarr, 0, rarr.length - 1, Math.floor(rarr.length / 8), glob_display_func);
 }
 
 
@@ -526,41 +381,8 @@ async function visualize_init(amount, upper, lower) {
     lower = lower || glob_lower;
 
     glob_stime = (new Date()).getTime();
-
-    // -- PAUSE -- //
-    refresh(0, 0);
-    rarr = glob_random_func(amount, upper, lower, glob_display_func);
     await sleep(glob_sleep_between);
 
-    // -- COUNTING SORT -- //
-    // await doCountingSort(rarr);
-
-    // // -- PAUSE -- //
-    // await sleep(glob_sleep_between);
-    // refresh(0, 0);
-    // rarr = glob_random_func(amount, upper, lower, glob_display_func);
-    // await sleep(glob_sleep_between);
-
-    // // -- QUICK SORT -- //
-    await doQuickSort(rarr);
-
-    // await sleep(10000);
-
-    // // -- PAUSE -- //
-    // await sleep(glob_sleep_between);
-    // refresh(0, 0);
-    // rarr = glob_random_func(amount, upper, lower, glob_display_func);
-    // await sleep(glob_sleep_between);
-
-    // // -- INSERTION SORT -- //
-    // await doInsertionSort(rarr);
-
-    // // -- PAUSE -- //
-    // await sleep(glob_sleep_between);
-    // refresh(0, 0);
-    // rarr = glob_random_func(amount, upper, lower, glob_display_func);
-    // await sleep(glob_sleep_between);
-
-    // // -- SELECTION SORT -- //
-    // await doSelectionSort(rarr);
+    // -- QUICK SORT -- //
+    doSortingAlgo(doQuickSort);
 }

@@ -7,7 +7,6 @@ async function combSort(a, display) {
 
     while (gap > 1 || swapped) {
         gap = await getGap(gap);
-        console.log(gap);
 
         swapped = false;
 
