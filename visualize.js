@@ -24,7 +24,7 @@ function changeTheme(theme) {
     if (document.getElementById('theme_in')!==null)
         document.getElementById('theme_in').value = theme;
 
-    window.history.pushState(`${theme.toUpperCase()}-THEME`, 'Changed theme ... ', `${theme}`);
+    // window.history.pushState(`${theme.toUpperCase()}-THEME`, 'Changed theme ... ', `${theme}`);
 
     xhtp.open("GET", "themes/" + theme + ".css");
     xhtp.send();
@@ -62,6 +62,43 @@ function display_array_color_pillars(arr) {
 
         ctx.moveTo(i, canvas.height);
         ctx.lineTo(i, canvas.height - (arr[Math.floor(i / (canvas.width / (arr.length - 1))) - 1] * scale));
+
+        ctx.stroke();
+    }
+}
+function display_array_pyramid (arr, focused_els_i) {
+    focused_els_i = focused_els_i || [];
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let scale = canvas.width / Math.max(...arr);
+
+    for (let i = canvas.height / (arr.length + 1); i <= canvas.height; i += canvas.height / (arr.length + 1)) {
+        ctx.beginPath();
+
+        ctx.strokeStyle = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? "red" : glob_themes[glob_theme]["color"];
+        ctx.lineWidth = focused_els_i.includes(Math.floor(i / (canvas.width / (arr.length + 1)))) ? 4 : 2;
+
+        ctx.moveTo(canvas.width/2-(arr[Math.floor(i / (canvas.width / (arr.length + 1))) - 1] * scale)/2, i);
+        ctx.lineTo(canvas.width/2+(arr[Math.floor(i / (canvas.width / (arr.length + 1))) - 1] * scale)/2, i);
+
+        ctx.stroke();
+    }
+}
+function display_array_color_pyramid (arr) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let scale = canvas.height / Math.max(...arr);
+
+    let line_weight = 2,
+        arr_max = Math.max(...arr);
+
+    for (let i = canvas.width / (arr.length - 1); i <= canvas.width; i += canvas.width / (arr.length - 1)) {
+        ctx.beginPath();
+
+        ctx.strokeStyle = "hsl(" + arr[Math.floor(i / (canvas.width / (arr.length - 1)))] * (360 / arr_max) + ", 100%, 50%)";
+        ctx.lineWidth = line_weight;
+
+        ctx.moveTo(canvas.width/2-(arr[Math.floor(i / (canvas.width / (arr.length + 1))) - 1] * scale)/2, i);
+        ctx.lineTo(canvas.width/2+(arr[Math.floor(i / (canvas.width / (arr.length + 1))) - 1] * scale)/2, i);
 
         ctx.stroke();
     }

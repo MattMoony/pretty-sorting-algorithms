@@ -106,6 +106,9 @@
                     <option value="display_array_color_pillars">As colored pillars</option>
                     <option value="display_array_color_dots">As colored dots</option>
 
+                    <option value="display_array_pyramid">As pyramid</option>
+                    <option value="display_array_color_pyramid">As colored pyramid</option>
+
                     <option value="display_array_pillar_spiral">As spiral of pillars</option>
                     <option value="display_array_dots_spiral">As spiral of dots</option>
                     <option value="display_array_color_pillar_spiral">As colored spiral of pillars</option>
@@ -232,6 +235,12 @@
                         break;
                     case 'display_array_color_circle_dots':
                         glob_display_func = display_array_color_circle_dots;
+                        break;
+                    case 'display_array_pyramid':
+                        glob_display_func = display_array_pyramid;
+                        break;
+                    case 'display_array_color_pyramid':
+                        glob_display_func = display_array_color_pyramid;
                         break;
                 }
 
